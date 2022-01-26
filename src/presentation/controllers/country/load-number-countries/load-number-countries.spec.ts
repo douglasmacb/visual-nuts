@@ -1,6 +1,6 @@
-import { NumberCountry } from '../../../../domain/models/number-country'
 import { LoadNumberCountriesController } from './load-number-countries-controller'
-import { LoadNumberCountries } from './load-number-countries-protocols'
+import { LoadNumberCountries, NumberCountry, serverError } from './load-number-countries-protocols'
+import faker from 'faker'
 
 interface SutTypes {
   sut: LoadNumberCountriesController
@@ -18,7 +18,7 @@ const makeSut = (): SutTypes => {
 }
 
 const makeFakeNumberCountries = (): NumberCountry => ({
-  quantity: 0
+  quantity: faker.random.number()
 })
 
 const makeCountries = (): LoadNumberCountries => {
@@ -37,5 +37,13 @@ describe('LoadNumberCountries Controller', () => {
 
     await sut.handle({})
     expect(loadSpy).toHaveBeenCalled()
+  })
+
+  test('Should return 500 if LoadNumberCountries throws', async () => {
+    const { sut, loadCountriesStub } = makeSut()
+    jest.spyOn(loadCountriesStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
