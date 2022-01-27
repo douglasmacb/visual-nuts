@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { makeLoadNumberCountriesController } from '../factories/load-number-countries/load-number-countries'
+import { makeLoadNumberCountriesController } from '../factories/load-number-countries/load-number-countries-factory'
 import { adaptRoute } from '../adapters/express-route-adapter'
 
 export default (router: Router): void => {

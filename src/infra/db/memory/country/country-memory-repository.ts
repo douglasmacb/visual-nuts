@@ -1,4 +1,4 @@
-import { LoadCountriesRepository } from '../../../../data/protocols/db/load-countries-repository'
+import { LoadCountriesRepository } from '../../../../data/protocols/db-country/load-countries-repository'
 import { CountryModel } from '../../../../domain/models/country-model'
 
 export class CountryMemoryRepository implements LoadCountriesRepository {
