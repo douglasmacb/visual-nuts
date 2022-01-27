@@ -1,24 +1,26 @@
 import { LoadNumberCountriesController } from './load-number-countries-controller'
-import { LoadNumberCountries, NumberCountry, serverError } from './load-number-countries-protocols'
+import { LoadNumberCountries, NumberCountry, ok, serverError } from './load-number-countries-protocols'
 import faker from 'faker'
 
 interface SutTypes {
   sut: LoadNumberCountriesController
-  loadCountriesStub: LoadNumberCountries
+  loadNumberCountriesStub: LoadNumberCountries
 }
 
 const makeSut = (): SutTypes => {
-  const loadCountriesStub = makeCountries()
-  const sut = new LoadNumberCountriesController(loadCountriesStub)
+  const loadNumberCountriesStub = makeCountries()
+  const sut = new LoadNumberCountriesController(loadNumberCountriesStub)
 
   return {
     sut,
-    loadCountriesStub
+    loadNumberCountriesStub
   }
 }
 
+const NUMBER_COUNTRIES = faker.random.number()
+
 const makeFakeNumberCountries = (): NumberCountry => ({
-  quantity: faker.random.number()
+  quantity: NUMBER_COUNTRIES
 })
 
 const makeCountries = (): LoadNumberCountries => {
@@ -31,17 +33,24 @@ const makeCountries = (): LoadNumberCountries => {
 }
 
 describe('LoadNumberCountries Controller', () => {
-  test('Should call LoadNumberCountries', async () => {
-    const { sut, loadCountriesStub } = makeSut()
-    const loadSpy = jest.spyOn(loadCountriesStub, 'load')
+  test('Should call loadNumberCountries', async () => {
+    const { sut, loadNumberCountriesStub } = makeSut()
+    const loadSpy = jest.spyOn(loadNumberCountriesStub, 'load')
 
     await sut.handle({})
     expect(loadSpy).toHaveBeenCalled()
   })
 
+  test('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({})
+    const countries: NumberCountry = makeFakeNumberCountries()
+    expect(httpResponse).toEqual(ok({ countries }))
+  })
+
   test('Should return 500 if LoadNumberCountries throws', async () => {
-    const { sut, loadCountriesStub } = makeSut()
-    jest.spyOn(loadCountriesStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const { sut, loadNumberCountriesStub } = makeSut()
+    jest.spyOn(loadNumberCountriesStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
 
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(serverError(new Error()))
