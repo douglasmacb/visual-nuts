@@ -5,9 +5,10 @@ export class LoadMolCountryController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { language } = httpRequest.params
-      const country: MolCountryModel = await this.loadMolCountry.loadByLanguage(language)
-      return ok({ country })
+      const { official_language } = httpRequest.query
+
+      const molCountry: MolCountryModel = await this.loadMolCountry.loadByLanguage(official_language)
+      return ok({ ...molCountry })
     } catch (error) {
       return serverError(error)
     }

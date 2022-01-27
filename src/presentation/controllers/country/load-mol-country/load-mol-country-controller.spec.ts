@@ -1,14 +1,18 @@
 import { serverError, LoadMolCountry, LoadMolCountryController, MolCountryModel, ok, HttpRequest } from './load-mol-country-protocols'
 
 const makeFakeCountry = (): MolCountryModel => ({
-  name: 'PT',
-  languages: ['de', 'en'],
-  count: 2
+  countries: [
+    {
+      country: 'PT',
+      languages: ['de', 'en']
+    }
+  ],
+  languagesCount: 2
 })
 
 const makeFakeRequest = (): HttpRequest => ({
-  params: {
-    language: 'de'
+  query: {
+    official_language: 'de'
   }
 })
 
@@ -48,7 +52,7 @@ describe('LoadMolCountry Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     const country: MolCountryModel = makeFakeCountry()
-    expect(httpResponse).toEqual(ok({ country }))
+    expect(httpResponse).toEqual(ok({ ...country }))
   })
 
   test('Should return 500 if LoadMolCountry throws', async () => {

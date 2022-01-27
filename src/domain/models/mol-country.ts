@@ -1,5 +1,6 @@
+import { CountryModel } from './country'
+
 export interface MolCountryModel {
-  name: string
-  languages: string[]
-  count: number
+  countries: CountryModel[]
+  languagesCount: number
 }
