@@ -1,5 +1,5 @@
-import { CountryModel } from '../models/country-model'
+import { MolCountryModel } from '../models/mol-country'
 
 export interface LoadMolCountry {
-  load (): Promise<CountryModel>
+  loadByLanguage (language: string): Promise<MolCountryModel>
 }

@@ -1,13 +1,20 @@
-import { serverError, LoadMolCountry, LoadMolCountryController, CountryModel, ok } from './load-mol-country-protocols'
+import { serverError, LoadMolCountry, LoadMolCountryController, MolCountryModel, ok, HttpRequest } from './load-mol-country-protocols'
 
-const makeFakeCountry = (): CountryModel => ({
-  country: 'PT',
-  languages: ['de', 'en']
+const makeFakeCountry = (): MolCountryModel => ({
+  name: 'PT',
+  languages: ['de', 'en'],
+  count: 2
+})
+
+const makeFakeRequest = (): HttpRequest => ({
+  params: {
+    language: 'de'
+  }
 })
 
 const makeLoadMolCountry = (): LoadMolCountry => {
   class LoadMolCountryStub implements LoadMolCountry {
-    async load (): Promise<CountryModel> {
+    async loadByLanguage (): Promise<MolCountryModel> {
       return Promise.resolve(makeFakeCountry())
     }
   }
@@ -30,23 +37,23 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadMolCountry Controller', () => {
-  test('Should call LoadMolCountry', async () => {
+  test('Should call LoadMolCountry with correct values', async () => {
     const { sut, loadMolCountryStub } = makeSut()
-    const loadSpy = jest.spyOn(loadMolCountryStub, 'load')
-    await sut.handle({})
-    expect(loadSpy).toHaveBeenCalled()
+    const loadSpy = jest.spyOn(loadMolCountryStub, 'loadByLanguage')
+    await sut.handle(makeFakeRequest())
+    expect(loadSpy).toHaveBeenCalledWith('de')
   })
 
   test('Should return 200 on success', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.handle({})
-    const country: CountryModel = makeFakeCountry()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    const country: MolCountryModel = makeFakeCountry()
     expect(httpResponse).toEqual(ok({ country }))
   })
 
   test('Should return 500 if LoadMolCountry throws', async () => {
     const { sut, loadMolCountryStub } = makeSut()
-    jest.spyOn(loadMolCountryStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(loadMolCountryStub, 'loadByLanguage').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
 
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(serverError(new Error()))
