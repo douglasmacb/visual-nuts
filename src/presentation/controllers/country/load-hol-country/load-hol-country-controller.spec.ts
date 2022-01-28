@@ -30,7 +30,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadHolCountry Controller', () => {
-  test('Should call LoadHolCountry with correct values', async () => {
+  test('Should call LoadHolCountry', async () => {
     const { sut, loadHolCountryStub } = makeSut()
     const loadSpy = jest.spyOn(loadHolCountryStub, 'load')
     await sut.handle({})

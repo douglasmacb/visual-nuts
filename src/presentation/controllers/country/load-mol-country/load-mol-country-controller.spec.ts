@@ -58,7 +58,6 @@ describe('LoadMolCountry Controller', () => {
   test('Should return 500 if LoadMolCountry throws', async () => {
     const { sut, loadMolCountryStub } = makeSut()
     jest.spyOn(loadMolCountryStub, 'loadByLanguage').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(serverError(new Error()))
   })
