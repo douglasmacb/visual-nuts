@@ -1,6 +1,6 @@
 import { CountryModel } from './country'
 
-export interface MolCountryModel {
+export interface CountryMostOfficialLanguagesModel {
   countries: CountryModel[]
   languagesCount: number
 }
