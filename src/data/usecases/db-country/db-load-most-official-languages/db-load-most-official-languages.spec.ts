@@ -57,4 +57,13 @@ describe('DbLoadCommonOfficialLanguages', () => {
         await sut.load()
         expect(loadAllSpy).toHaveBeenCalled()
     })
+
+    test('Should return the most common official languages of all countries on success',  async() => {
+        const { sut } = makeSut()
+        const languages = await sut.load()
+        expect(languages).toEqual([
+            { name: 'nl' },
+            { name: 'de' }
+        ])
+    })
 })
