@@ -1,5 +1,4 @@
-import { LoadCommonOfficialLanguagesController } from './load-common-official-languages-controller'
-import { Language, LoadCommonOfficialLanguages, ok, serverError } from './load-common-official-languages-protocols'
+import { Language, LoadCommonOfficialLanguages, LoadCommonOfficialLanguagesController, ok, serverError } from './load-common-official-languages-protocols'
 
 interface SutTypes {
   sut: LoadCommonOfficialLanguagesController
