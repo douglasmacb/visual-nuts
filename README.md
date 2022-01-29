@@ -45,7 +45,14 @@ npm install
 
 ## 3rd step
 
-Start the docker container API
+Test
+``` shell script
+npm test
+```
+
+## Last step
+
+Start the docker container API and start to use it
 
 ``` shell script
 npm run up
