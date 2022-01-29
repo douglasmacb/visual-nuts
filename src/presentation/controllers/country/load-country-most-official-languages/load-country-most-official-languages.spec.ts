@@ -1,4 +1,4 @@
-import { serverError, LoadCountryMostOfficialLanguagesController, CountryMostOfficialLanguagesModel, LoadCountryMostOfficialLanguages, ok, HttpRequest } from './load-country-most-official-languages-protocols'
+import { serverError, badRequest, MissingParamError, Validation, LoadCountryMostOfficialLanguagesController, CountryMostOfficialLanguagesModel, LoadCountryMostOfficialLanguages, ok, HttpRequest } from './load-country-most-official-languages-protocols'
 
 const makeFakeCountry = (): CountryMostOfficialLanguagesModel => ({
   countries: [
@@ -12,9 +12,18 @@ const makeFakeCountry = (): CountryMostOfficialLanguagesModel => ({
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
-    language: 'de'
+    language: 'any_language'
   }
 })
+
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate (input: any): Error {
+      return null
+    }
+  }
+  return new ValidationStub()
+}
 
 const makeLoadCountryMostOfficialLanguages = (): LoadCountryMostOfficialLanguages => {
   class LoadCountryMostOfficialLanguagesStub implements LoadCountryMostOfficialLanguages {
@@ -28,15 +37,18 @@ const makeLoadCountryMostOfficialLanguages = (): LoadCountryMostOfficialLanguage
 interface SutTypes {
   sut: LoadCountryMostOfficialLanguagesController
   loadCountryMostOfficialLanguagesStub: LoadCountryMostOfficialLanguages
+  validationStub: Validation
 }
 
 const makeSut = (): SutTypes => {
   const loadCountryMostOfficialLanguagesStub = makeLoadCountryMostOfficialLanguages()
-  const sut = new LoadCountryMostOfficialLanguagesController(loadCountryMostOfficialLanguagesStub)
+  const validationStub = makeValidation()
+  const sut = new LoadCountryMostOfficialLanguagesController(loadCountryMostOfficialLanguagesStub, validationStub)
 
   return {
     sut,
-    loadCountryMostOfficialLanguagesStub
+    loadCountryMostOfficialLanguagesStub,
+    validationStub
   }
 }
 
@@ -45,7 +57,7 @@ describe('LoadCountryMostOfficialLanguages Controller', () => {
     const { sut, loadCountryMostOfficialLanguagesStub } = makeSut()
     const loadSpy = jest.spyOn(loadCountryMostOfficialLanguagesStub, 'loadByLanguage')
     await sut.handle(makeFakeRequest())
-    expect(loadSpy).toHaveBeenCalledWith('de')
+    expect(loadSpy).toHaveBeenCalledWith('any_language')
   })
 
   test('Should return 200 on success', async () => {
@@ -53,6 +65,21 @@ describe('LoadCountryMostOfficialLanguages Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest())
     const country: CountryMostOfficialLanguagesModel = makeFakeCountry()
     expect(httpResponse).toEqual(ok({ ...country }))
+  })
+
+  test('Should call Validation with correct values', async () => {
+    const { sut, validationStub } = makeSut()
+    const validateSpy = jest.spyOn(validationStub, 'validate')
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.params)
+  })
+
+  test('Should return 400 if Validation returns an error', async () => {
+    const { sut, validationStub } = makeSut()
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))
   })
 
   test('Should return 500 if LoadMolCountry throws', async () => {

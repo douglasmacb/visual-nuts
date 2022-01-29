@@ -19,6 +19,9 @@ export const countryMostOfficialLanguagesPath = {
             }
           }
         }
+      },
+      400: {
+        description: 'Bad Request'
       }
     }
   }
