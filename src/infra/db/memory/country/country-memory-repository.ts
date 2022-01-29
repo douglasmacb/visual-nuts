@@ -21,7 +21,7 @@ const data: CountryModel[] = [
   },
   {
     country: 'ES',
-    languages: ['es', 'de', 'nl', 'en']
+    languages: ['es']
   }
 ]
 

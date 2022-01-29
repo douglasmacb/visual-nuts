@@ -1,7 +1,7 @@
 export const countryMostOfficialLanguagesPath = {
   get: {
     tags: ['Countries'],
-    summary: 'API to find the country with the most official languages, where they officially speak German (de). - that counts all the official languages spoken in the listed countries.',
+    summary: 'API to find the country with the most official languages, where they officially speak a language specified (e.g: German [de]). - that counts all the official languages spoken in the listed countries.',
     parameters: [
       {
         name: 'language',
