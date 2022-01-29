@@ -1,0 +1,5 @@
+export * from '../../../protocols'
+export * from '../../../../domain/models/country'
+export * from '../../../../domain/usecases/load-country-highest-number-official-languages'
+export * from '../load-number-countries/load-number-countries-protocols'
+export * from './load-country-highest-number-official-languages-controller'
