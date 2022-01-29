@@ -1,4 +1,4 @@
-export const molSchema = {
+export const countryMostOfficialLanguagesSchema = {
   properties: {
     countries: {
       type: 'array',

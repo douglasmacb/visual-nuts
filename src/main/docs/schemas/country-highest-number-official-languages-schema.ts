@@ -1,4 +1,4 @@
-export const holSchema = {
+export const countryHighestNumberOfficialLanguagesSchema = {
   properties: {
     country: {
       type: 'string'

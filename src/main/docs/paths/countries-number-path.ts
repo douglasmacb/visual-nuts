@@ -1,4 +1,4 @@
-export const countryPath = {
+export const countryNumberPath = {
   get: {
     tags: ['Countries'],
     summary: 'API to return the number of countries in the world',

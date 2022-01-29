@@ -15,7 +15,7 @@ export const molPath = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/mol'
+              $ref: '#/schemas/countryMostOfficialLanguages'
             }
           }
         }

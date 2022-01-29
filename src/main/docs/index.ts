@@ -1,11 +1,11 @@
-import { countryPath } from './paths/countries-path'
-import { countriesParamSchema } from './schemas/countries-params-schema'
+import { countryNumberPath } from './paths/countries-number-path'
+import { countriesNumberParamSchema } from './schemas/countries-number-params-schema'
 import { commonOfficialLanguagesPath } from './paths/common-official-languages-path'
 import { countryNumberSchema } from './schemas/country-number-schema'
-import { holSchema } from './schemas/hol-country-schema'
-import { holPath } from './paths/hol-country-path'
-import { molSchema } from './schemas/mol-scountry-schema'
-import { molPath } from './paths/mol-country-path'
+import { countryHighestNumberOfficialLanguagesSchema } from './schemas/country-highest-number-official-languages-schema'
+import { countryHighestNumberOfficialLanguagesPath } from './paths/country-highest-number-official-languages-path'
+import { countryMostOfficialLanguagesSchema } from './schemas/country-most-official-languages-schema'
+import { molPath } from './paths/country-most-official-languages-path'
 import { commonOfficialLanguagesSchema } from './schemas/common-official-languages-schema'
 
 export default {
@@ -22,16 +22,16 @@ export default {
     name: 'Countries'
   }],
   paths: {
-    '/countries/total': countryPath,
-    '/countries?official_language={short_name}': molPath,
-    '/countries/highest/official-languages': holPath,
-    '/countries/common/official-languages': commonOfficialLanguagesPath
+    '/countries/total': countryNumberPath,
+    '/countries/official-languages/highest?official_language={short_name}': molPath,
+    '/countries/official-languages/highest': countryHighestNumberOfficialLanguagesPath,
+    '/countries/official-languages/most-common': commonOfficialLanguagesPath
   },
   schemas: {
-    countriesParam: countriesParamSchema,
+    countriesNumberParam: countriesNumberParamSchema,
     countryNumber: countryNumberSchema,
     commonOfficialLanguages: commonOfficialLanguagesSchema,
-    hol: holSchema,
-    mol: molSchema
+    countryHighestNumberOfficialLanguages: countryHighestNumberOfficialLanguagesSchema,
+    countryMostOfficialLanguages: countryMostOfficialLanguagesSchema
   }
 }

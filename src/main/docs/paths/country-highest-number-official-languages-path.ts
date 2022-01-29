@@ -1,4 +1,4 @@
-export const holPath = {
+export const countryHighestNumberOfficialLanguagesPath = {
   get: {
     tags: ['Countries'],
     summary: 'API to find the country with the highest number of official languages.',
@@ -8,7 +8,7 @@ export const holPath = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/hol'
+              $ref: '#/schemas/countryHighestNumberOfficialLanguages'
             }
           }
         }
