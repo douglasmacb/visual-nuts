@@ -7,7 +7,7 @@ import { makeLoadCountryMostOfficialLanguagesController } from '../factories/loa
 
 export default (router: Router): void => {
   router.get('/countries/total', adaptRoute(makeLoadNumberCountriesController()))
-  router.get('/countries/official-languages/most', adaptRoute(makeLoadCountryMostOfficialLanguagesController()))
+  router.get('/countries/official-languages/:language/highest', adaptRoute(makeLoadCountryMostOfficialLanguagesController()))
   router.get('/countries/official-languages/highest', adaptRoute(makeLoadCountryHighestNumberOfficialLanguagesController()))
   router.get('/countries/official-languages/most-common', adaptRoute(makeLoadCommonOfficialLanguagesController()))
 }

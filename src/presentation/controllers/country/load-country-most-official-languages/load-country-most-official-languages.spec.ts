@@ -11,8 +11,8 @@ const makeFakeCountry = (): CountryMostOfficialLanguagesModel => ({
 })
 
 const makeFakeRequest = (): HttpRequest => ({
-  query: {
-    official_language: 'de'
+  params: {
+    language: 'de'
   }
 })
 

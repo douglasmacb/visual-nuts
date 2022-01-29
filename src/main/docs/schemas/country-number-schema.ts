@@ -1,11 +1,8 @@
 export const countryNumberSchema = {
   type: 'object',
   properties: {
-    countries: {
-      type: 'object',
-      quantity: {
-        type: 'number'
-      }
+    total: {
+      type: 'number'
     }
   }
 }

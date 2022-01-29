@@ -6,7 +6,7 @@ export class LoadNumberCountriesController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const countries: NumberCountry = await this.loadNumberCountries.load()
-      return ok({ countries })
+      return ok({ ...countries })
     } catch (error) {
       return serverError(error)
     }

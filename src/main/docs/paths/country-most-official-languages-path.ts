@@ -1,10 +1,10 @@
-export const molPath = {
+export const countryMostOfficialLanguagesPath = {
   get: {
     tags: ['Countries'],
     summary: 'API to find the country with the most official languages, where they officially speak German (de). - that counts all the official languages spoken in the listed countries.',
     parameters: [
       {
-        name: 'short_name',
+        name: 'language',
         in: 'path',
         required: true
       }

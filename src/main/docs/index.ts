@@ -5,7 +5,7 @@ import { countryNumberSchema } from './schemas/country-number-schema'
 import { countryHighestNumberOfficialLanguagesSchema } from './schemas/country-highest-number-official-languages-schema'
 import { countryHighestNumberOfficialLanguagesPath } from './paths/country-highest-number-official-languages-path'
 import { countryMostOfficialLanguagesSchema } from './schemas/country-most-official-languages-schema'
-import { molPath } from './paths/country-most-official-languages-path'
+import { countryMostOfficialLanguagesPath } from './paths/country-most-official-languages-path'
 import { commonOfficialLanguagesSchema } from './schemas/common-official-languages-schema'
 
 export default {
@@ -23,7 +23,7 @@ export default {
   }],
   paths: {
     '/countries/total': countryNumberPath,
-    '/countries/official-languages/highest?official_language={short_name}': molPath,
+    '/countries/official-languages/{language}/highest': countryMostOfficialLanguagesPath,
     '/countries/official-languages/highest': countryHighestNumberOfficialLanguagesPath,
     '/countries/official-languages/most-common': commonOfficialLanguagesPath
   },

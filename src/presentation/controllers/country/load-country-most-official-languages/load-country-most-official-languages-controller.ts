@@ -5,9 +5,9 @@ export class LoadCountryMostOfficialLanguagesController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { official_language } = httpRequest.query
+      const { language } = httpRequest.params
 
-      const molCountry: CountryMostOfficialLanguagesModel = await this.loadCountryMostOfficialLanguages.loadByLanguage(official_language)
+      const molCountry: CountryMostOfficialLanguagesModel = await this.loadCountryMostOfficialLanguages.loadByLanguage(language)
       return ok({ ...molCountry })
     } catch (error) {
       return serverError(error)

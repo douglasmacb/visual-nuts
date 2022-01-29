@@ -20,7 +20,7 @@ const makeSut = (): SutTypes => {
 const NUMBER_COUNTRIES = faker.random.number()
 
 const makeFakeNumberCountries = (): NumberCountry => ({
-  quantity: NUMBER_COUNTRIES
+  total: NUMBER_COUNTRIES
 })
 
 const makeCountries = (): LoadNumberCountries => {
@@ -45,7 +45,7 @@ describe('LoadNumberCountries Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({})
     const countries: NumberCountry = makeFakeNumberCountries()
-    expect(httpResponse).toEqual(ok({ countries }))
+    expect(httpResponse).toEqual(ok({ ...countries }))
   })
 
   test('Should return 500 if LoadNumberCountries throws', async () => {
