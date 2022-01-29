@@ -58,6 +58,12 @@ Start the docker container API and start to use it
 npm run up
 ```
 
+## If you want to stop the container
+
+``` shell script
+npm run down
+```
+
 
 ## How to use
 
